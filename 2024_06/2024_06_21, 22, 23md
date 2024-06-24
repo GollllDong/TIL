@@ -1,0 +1,58 @@
+# [2024_06_21 ~ 23]
+
+## 06/21 ~ 23
+QueryDSL로 category_name에 따라 해당하는 값 전부 SELECT
+![1](https://github.com/GollllDong/TIL/assets/109501612/1f5aeda0-2836-4c37-9f60-7328d22ac7a7)
+
+DTO 변환 X
+
+임의로 타임리프 활용해서 값 정상적으로 나오는지 확인
+![2](https://github.com/GollllDong/TIL/assets/109501612/dcd5ff62-779d-4123-b522-9cf4cc977d4c)
+
+21일 22시 : categoryName에 해당하는 Category, Products, Size, SizePrice, Bid테이블의 값 DTO 변환완료
+```java
+@Override
+    public List<ProductResponseDTO> selectCategoryName(String categoryName) {
+
+        List<Products> products = productsRepository.selectProductInfo(categoryName);
+
+        return products.stream()
+                .map(this::convertToDTO)
+                .collect(Collectors.toList());
+    }
+
+    private ProductResponseDTO convertToDTO(Products product) {
+
+        // 해당 product 값들을 DTO로 변환
+        ProductResponseDTO productDTO = modelMapper.map(product, ProductResponseDTO.class);
+
+        // Products 엔티티에 연관되어있는 Size엔티티들을 SizeDTO로 변환
+        List<SizeDTO> sizes = sizeRepository.findByProduct(product).stream()
+                .map(size -> {
+                    // 각 Size 엔티티를 SizeDTO로 변환
+                    SizeDTO sizeDTO = modelMapper.map(size, SizeDTO.class);
+
+                    // Size 엔티티에 연관된 SizePrice -> DTO 변환
+                    List<SizePriceDTO> sizePrices = sizePriceRepository.findBySize(size).stream()
+                            .map(sizePrice -> modelMapper.map(sizePrice, SizePriceDTO.class))
+                            .collect(Collectors.toList());
+
+                    // Size 엔티티에 연관된 Bid -> DTO 변환
+                    List<BidDTO> bids = bidRepository.findBySize(size).stream()
+                            .map(bid -> modelMapper.map(bid, BidDTO.class))
+                            .collect(Collectors.toList());
+
+                    // 변환된 DTO를 SizeDTO에 저장
+                    sizeDTO.setSizePrices(sizePrices);
+                    sizeDTO.setBids(bids);
+                    return sizeDTO;
+                })
+                // Stream -> List 변환
+                .collect(Collectors.toList());
+
+        // SizeDTO -> Products 저장
+        productDTO.setSizes(sizes);
+        return productDTO;
+    }
+```
+<img width="396" alt="Untitled" src="https://github.com/GollllDong/TIL/assets/109501612/bf90f1dd-70f0-4f6d-828a-75ddfd732ea5">
