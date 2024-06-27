@@ -1,6 +1,12 @@
 # 📝Today I Learn📝
 ### [🧑🏻‍💻GollDong Tistory 바로가기🧑🏻‍💻](https://bupr.tistory.com/)
 
+### [30일차 TIL](https://github.com/GollllDong/TIL/blob/main/2024_06/2024_06_27.md)
+### [29일차 TIL](https://github.com/GollllDong/TIL/blob/main/2024_06/2024_06_25,26.md)
+### [28일차 TIL](https://github.com/GollllDong/TIL/blob/main/2024_06/2024_06_24.md)
+### [25,26,27일차 TIL](https://github.com/GollllDong/TIL/blob/main/2024_06/2024_06_21,22,23.md)
+### [24일차 TIL](https://github.com/GollllDong/TIL/blob/main/2024_06/2024_06_20.md)
+### [22,23일차 TIL](https://github.com/GollllDong/TIL/blob/main/2024_06/2024_06_18,19.md)
 ### [21일차 TIL](https://github.com/GollllDong/TIL/blob/main/2024_06/2024_06_17.md)
 ### [20일차 TIL](https://github.com/GollllDong/TIL/blob/main/2024_06/2024_06_16.md)
 ### [19일차 TIL](https://github.com/GollllDong/TIL/blob/main/2024_06/2024_06_15.md)
